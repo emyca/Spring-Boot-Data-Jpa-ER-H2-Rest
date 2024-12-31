@@ -1,0 +1,264 @@
+
+REST API Post-Comment
+-----------------------
+
+В Web-браузері запускаємо H2 Database Engine
+http://localhost:8080/h2-console
+Конектимося до БД.
+
+Postman для тесту REST API
+https://www.postman.com/
+
+Для передачі тіла запиту,
+налаштування в Postman: Body > raw > JSON.
+
+
+(1) Отримання всіх Post даних
+
+GET
+http://localhost:8080/api/v1/posts
+
+
+(2) Отримання всіх Comment даних за
+неіснуючим Post id, оскільки Post
+дані не існують взагалі.
+
+GET
+http://localhost:8080/api/v1/posts/1/comments
+
+
+(3) Отримання даних за id.
+Дані не існують взагалі.
+
+GET
+http://localhost:8080/api/v1/posts/1
+
+GET
+http://localhost:8080/api/v1/comments/1
+
+
+(4) Оновлення даних за id.
+Дані не існують взагалі.
+
+PUT
+http://localhost:8080/api/v1/posts/1
+
+{
+	"title": "Fruits",
+	"content": "Fruits are very tasty and useful."
+}
+
+PUT
+http://localhost:8080/api/v1/comments/1
+
+{
+	"consideration": "It can be discussed."
+}
+
+
+(5) Видалення даних за id
+Дані не існують взагалі.
+
+DELETE
+http://localhost:8080/api/v1/posts/1
+
+DELETE
+http://localhost:8080/api/v1/comments/1
+
+
+(6) Створення Post даних
+
+POST
+http://localhost:8080/api/v1/posts
+
+Прописуємо при кожному запиті окремо:
+
+
+{
+	"title": "Fruits",
+	"content": "Fruits are very useful for eating."
+}
+
+
+{
+	"title": "About animals",
+	"content": "Animals are very funny creatures."
+}
+
+
+{
+	"title": "Football game",
+	"content": "Football as a game is very common in many countries."
+}
+
+
+(7) Створення Comment даних за Post id.
+
+POST
+http://localhost:8080/api/v1/posts/1/comments
+
+{
+	"consideration": "Good thinking."
+}
+
+Перевіремо через отримання всіх Post даних
+GET
+http://localhost:8080/api/v1/posts
+
+POST
+http://localhost:8080/api/v1/posts/1/comments
+
+{
+	"consideration": "Interesting thoughts."
+}
+
+Перевіремо через отримання всіх Post даних
+GET
+http://localhost:8080/api/v1/posts
+
+POST
+http://localhost:8080/api/v1/posts/3/comments
+
+{
+	"consideration": "Interesting thoughts."
+}
+
+Перевіремо через отримання всіх Post даних
+GET
+http://localhost:8080/api/v1/posts
+
+Спробуємо створити Comment даних за неіснуючим Post id.
+
+
+(8) Отримання всіх Post даних.
+Дані існують.
+
+GET
+http://localhost:8080/api/v1/posts
+
+
+(9) Отримання всіх Comment даних за існуючим Post id.
+
+Post дані існують, Comment дані існують
+GET
+http://localhost:8080/api/v1/posts/1/comments
+
+Post дані існують, Comment дані не існують
+GET
+http://localhost:8080/api/v1/posts/2/comments
+
+Спробуємо за неіснуючим Post id.
+
+
+(10) Отримання даних за id
+Дані існують
+
+GET
+http://localhost:8080/api/v1/posts/1
+
+GET
+http://localhost:8080/api/v1/comments/1
+
+Також спробуємо за неіснуючим id.
+
+
+(11) Оновлення Post даних за id
+Дані існують
+
+PUT
+http://localhost:8080/api/v1/posts/2
+
+{
+	"title": "About animals",
+	"content": "Animals are very funny and clever creatures."
+}
+
+Перевіремо через отримання всіх Post даних
+GET
+http://localhost:8080/api/v1/posts
+
+PUT
+http://localhost:8080/api/v1/posts/1
+
+{
+	"title": "Fruits",
+	"content": "Fruits are very tasty and useful."
+}
+
+Перевіремо через отримання всіх Post даних
+GET
+http://localhost:8080/api/v1/posts
+
+Також спробуємо оновлення Post даних за неіснуючим
+Post id.
+
+
+(12) Оновлення Comment даних за id
+
+PUT
+http://localhost:8080/api/v1/comments/3
+
+{
+	"consideration": "It can be discussed."
+}
+
+Також спробуємо за неіснуючим id.
+
+
+(13) Створення Post даних
+
+POST
+http://localhost:8080/api/v1/posts
+
+{
+	"title": "Books",
+	"content": "Books are a source of knowledge."
+}
+
+Перевіремо через отримання всіх Post даних
+GET
+http://localhost:8080/api/v1/posts
+
+
+(14) Створення Comment даних за Post id
+
+POST
+http://localhost:8080/api/v1/posts/4/comments
+
+{
+	"consideration": "Amazing and unbelievable!"
+}
+
+{
+	"consideration": "Good thinking."
+}
+
+Перевіремо через отримання всіх Post даних
+GET
+http://localhost:8080/api/v1/posts
+
+
+(15) Видалення Post даних за id.
+Дані існують.
+
+DELETE
+http://localhost:8080/api/v1/posts/3
+
+Спробуємо видалити повторно.
+
+Перевіремо через отримання всіх Post даних
+GET
+http://localhost:8080/api/v1/posts
+
+
+(16) Видалення Comment даних за id
+
+DELETE
+http://localhost:8080/api/v1/comments/2
+
+Спробуємо видалити повторно.
+
+Перевіремо через отримання всіх Post даних
+GET
+http://localhost:8080/api/v1/posts
+

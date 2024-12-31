@@ -1,0 +1,109 @@
+
+REST API Consumer-Domicile
+----------------------------
+
+В Web-браузері запускаємо H2 Database Engine
+http://localhost:8080/h2-console
+Конектимося до БД.
+
+Postman для тесту REST API
+https://www.postman.com/
+
+Для передачі тіла запиту,
+налаштування в Postman: Body > raw > JSON.
+
+
+(1) Отримання всіх даних
+
+GET
+http://localhost:8080/api/v1/consumers
+
+
+(2) Створення даних
+
+POST
+http://localhost:8080/api/v1/consumers
+
+Налаштування в Postman: Body > raw > JSON.
+Прописуємо при кожному запиті окремо.
+
+
+{
+	"firstName": "Alice",
+	"lastName": "Sunny",
+	"email": "alice@mail.com",
+	"city": "LightCity",
+    "street": "Rainbow St.",
+    "building": "15A",
+    "apartment": "125C"
+}
+
+
+{
+	"firstName": "Bob",
+	"lastName": "Green",
+	"email": "bob@mail.com",
+	"city": "LightCity",
+    "street": "Moon St.",
+    "building": "23",
+    "apartment": "56"
+}
+
+
+{
+	"firstName": "Lucy",
+	"lastName": "Moon",
+	"email": "moon@mail.com",
+	"city": "Freeburg",
+    "street": "Broad Rd.",
+    "building": "14",
+    "apartment": "97"
+}
+
+{
+	"firstName": "Tom",
+	"lastName": "Clark",
+	"email": "tom@mail.com",
+	"city": "Freeburg",
+    "street": "Swift St.",
+    "building": "17",
+    "apartment": "188"
+}
+
+
+
+(3) Отримання даних за id
+
+GET
+http://localhost:8080/api/v1/consumers/1
+
+Також спробуємо за неіснуючим id.
+
+
+(4) Оновлення даних за id
+
+PUT
+http://localhost:8080/api/v1/consumers/2
+
+Налаштування в Postman: Body > raw > JSON.
+
+{
+	"firstName": "Bob",
+	"lastName": "Green",
+	"email": "bob.green@mail.com",
+	"city": "LightCity",
+    "street": "Winter St.",
+    "building": "21",
+    "apartment": "84"
+}
+
+Також спробуємо за неіснуючим id.
+
+
+(5) Видалення даних за id
+
+DELETE
+http://localhost:8080/api/v1/consumers/3
+
+Спробуємо видалити повторно.
+

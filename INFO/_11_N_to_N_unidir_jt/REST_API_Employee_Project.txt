@@ -1,0 +1,268 @@
+
+REST API Employee-Project
+--------------------------
+
+В Web-браузері запускаємо H2 Database Engine
+http://localhost:8080/h2-console
+Конектимося до БД.
+
+Postman для тесту REST API
+https://www.postman.com/
+
+Для передачі тіла запиту,
+налаштування в Postman: Body > raw > JSON.
+
+
+(1) Отримання всіх Employee даних.
+Дані не існують взагалі.
+
+GET
+http://localhost:8080/api/v1/employees
+
+
+(2) Отримання Employee за id.
+Дані не існують взагалі.
+
+GET
+http://localhost:8080/api/v1/employees/1
+
+
+(3) Отримання всіх Project даних.
+Дані не існують взагалі.
+
+GET
+http://localhost:8080/api/v1/projects
+
+
+(4) Отримання Project за id.
+Дані не існують взагалі.
+
+GET
+http://localhost:8080/api/v1/projects/1
+
+
+(5) Отримання всіх Employee даних за
+неіснуючим Project id, оскільки Project
+дані не існують взагалі.
+
+GET
+http://localhost:8080/api/v1/projects/1/employees
+
+
+(6) Створення даних Employee.
+
+POST
+http://localhost:8080/api/v1/employees
+
+Прописуємо при кожному запиті окремо.
+
+
+{
+	"firstName": "Alice",
+	"lastName": "Sunny",
+	"email": "alice@mail.com",
+}
+
+
+{
+	"firstName": "Bob",
+	"lastName": "Green",
+	"email": "bob@mail.com",
+}
+
+
+{
+	"firstName": "Lucy",
+	"lastName": "Moon",
+	"email": "moon@mail.com"
+}
+
+
+{
+	"firstName": "Tom",
+	"lastName": "Clark",
+	"email": "tom@mail.com",
+}
+
+Перевіремо створення Employee об'єктів
+
+GET
+http://localhost:8080/api/v1/employees
+
+
+(7) Створення даних Project.
+
+POST
+http://localhost:8080/api/v1/projects
+
+Прописуємо при кожному запиті окремо.
+
+{
+	"name": "Alpha"
+}
+
+
+{
+	"name": "Beta"
+}
+
+
+{
+	"name": "Gamma"
+}
+
+Перевіремо створення Project об'єктів
+
+GET
+http://localhost:8080/api/v1/projects
+
+
+(8) Закріплення Project за Employee id.
+Project id в тілі запиту.
+
+POST
+http://localhost:8080/api/v1/employees/1/projects
+
+{
+	"id": 1
+}
+
+
+POST
+http://localhost:8080/api/v1/employees/1/projects
+
+{
+	"id": 2
+}
+
+
+POST
+http://localhost:8080/api/v1/employees/2/projects
+
+{
+	"id": 2
+}
+
+
+POST
+http://localhost:8080/api/v1/employees/2/projects
+
+{
+	"id": 3
+}
+
+POST
+http://localhost:8080/api/v1/employees/4/projects
+
+{
+	"id": 2
+}
+
+
+Також, спробуємо за неіснуючим Employee id.
+
+
+(9) Повторимо маніпуляції в пп 1-5 (включаючи з невірними id).
+Дані вже існують.
+
+
+(10) Оновлення Employee за id.
+
+PUT
+http://localhost:8080/api/v1/employees/1
+
+{
+	"firstName": "Alice",
+	"lastName": "Terra",
+	"email": "terra@mail.com"
+}
+
+PUT
+http://localhost:8080/api/v1/employees/2
+
+{
+	"firstName": "Bob",
+	"lastName": "Green",
+	"email": "b.green@mail.com"
+}
+
+Перевіремо оновлення Employee об'єктів
+GET
+http://localhost:8080/api/v1/employees
+
+
+(11) Оновлення Project за id.
+
+PUT
+http://localhost:8080/api/v1/projects/1
+
+{
+	"name": "Alpha +"
+}
+
+PUT
+http://localhost:8080/api/v1/projects/3
+
+{
+	"name": "Gamma +"
+}
+
+Перевіремо оновлення Project об'єктів
+GET
+http://localhost:8080/api/v1/projects
+
+
+(12) Відкріплення Project за id та Employee id.
+
+DELETE
+http://localhost:8080/api/v1/employees/1/projects/1
+
+DELETE
+http://localhost:8080/api/v1/employees/4/projects/2
+
+Перевіремо
+
+GET
+http://localhost:8080/api/v1/projects
+
+GET
+http://localhost:8080/api/v1/employees
+
+
+(13) Видалення Project за id.
+
+DELETE
+http://localhost:8080/api/v1/projects/2
+
+Маємо отримати Referential integrity constraint violation,
+оскільки Project за таким id має посилання на певного(их) Employee.
+Треба спершу відкрипіти цей курс від цього/цих Employee.
+(Див. п. 12).
+
+Також, спробуємо за неіснуючими id.
+
+Видалемо Project за id, який НЕ має посилання на певного Employee.
+DELETE
+http://localhost:8080/api/v1/projects/1
+
+Перевіремо
+GET
+http://localhost:8080/api/v1/projects
+
+
+(14) Видалення Employee за id.
+
+DELETE
+http://localhost:8080/api/v1/employees/1
+
+DELETE
+http://localhost:8080/api/v1/employees/4
+
+Спробуємо видалити повторно.
+
+Також, спробуємо за неіснуючими id.
+
+Перевіремо
+GET
+http://localhost:8080/api/v1/employees
+

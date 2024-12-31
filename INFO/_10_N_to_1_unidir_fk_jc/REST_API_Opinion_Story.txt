@@ -1,0 +1,259 @@
+
+REST API Opinion-Story
+------------------------
+
+В Web-браузері запускаємо H2 Database Engine
+http://localhost:8080/h2-console
+Конектимося до БД.
+
+Postman для тесту REST API
+https://www.postman.com/
+
+Для передачі тіла запиту,
+налаштування в Postman: Body > raw > JSON.
+
+
+(1) Отримання всіх Story даних
+
+GET
+http://localhost:8080/api/v1/stories
+
+
+(2) Отримання всіх Opinion даних за
+неіснуючим Story id, оскільки Story
+дані не існують взагалі.
+
+GET
+http://localhost:8080/api/v1/stories/1/opinions
+
+
+(3) Отримання даних за id.
+Дані не існують взагалі.
+
+GET
+http://localhost:8080/api/v1/stories/1
+
+GET
+http://localhost:8080/api/v1/opinions/1
+
+
+(4) Оновлення даних за id.
+Дані не існують взагалі.
+
+PUT
+http://localhost:8080/api/v1/stories/1
+
+{
+	"title": "Fruits",
+	"content": "Fruits are very tasty and useful."
+}
+
+PUT
+http://localhost:8080/api/v1/opinions/1
+
+{
+	"consideration": "It can be discussed."
+}
+
+
+(5) Видалення даних за id
+Дані не існують взагалі.
+
+DELETE
+http://localhost:8080/api/v1/stories/1
+
+DELETE
+http://localhost:8080/api/v1/opinions/1
+
+
+(6) Створення Story даних
+
+POST
+http://localhost:8080/api/v1/stories
+
+Прописуємо при кожному запиті окремо:
+
+
+{
+	"title": "Fruits",
+	"content": "Fruits are very useful for eating."
+}
+
+
+{
+	"title": "About animals",
+	"content": "Animals are very funny creatures."
+}
+
+
+{
+	"title": "Football game",
+	"content": "Football as a game is very common in many countries."
+}
+
+
+(7) Створення Opinion даних за Story id.
+
+POST
+http://localhost:8080/api/v1/stories/1/opinions
+
+{
+	"consideration": "Good thinking."
+}
+
+POST
+http://localhost:8080/api/v1/stories/1/opinions
+
+{
+	"consideration": "Interesting thoughts."
+}
+
+POST
+http://localhost:8080/api/v1/stories/3/opinions
+
+{
+	"consideration": "Interesting thoughts."
+}
+
+Спробуємо створити Opinion даних за неіснуючим Story id.
+
+
+(8) Отримання всіх Story даних.
+Дані існують.
+
+GET
+http://localhost:8080/api/v1/stories
+
+
+(9) Отримання всіх Opinion даних за існуючим Story id.
+
+Story дані існують, Opinion дані існують
+GET
+http://localhost:8080/api/v1/stories/1/opinions
+
+Story дані існують, Opinion дані не існують
+GET
+http://localhost:8080/api/v1/stories/2/opinions
+
+Спробуємо за неіснуючим Story id.
+
+
+(10) Отримання даних за id
+Дані існують
+
+GET
+http://localhost:8080/api/v1/stories/1
+
+GET
+http://localhost:8080/api/v1/opinions/1
+
+Також спробуємо за неіснуючим id.
+
+
+(11) Оновлення Story даних за id
+Дані існують
+
+PUT
+http://localhost:8080/api/v1/stories/2
+
+{
+	"title": "About animals",
+	"content": "Animals are very funny and clever creatures."
+}
+
+PUT
+http://localhost:8080/api/v1/stories/1
+
+{
+	"title": "Fruits",
+	"content": "Fruits are very tasty and useful."
+}
+
+Перевіремо через отримання всіх Story даних
+GET
+http://localhost:8080/api/v1/stories
+
+Також спробуємо оновлення Story даних за неіснуючим
+Story id.
+
+
+(12) Оновлення Opinion даних за id
+
+PUT
+http://localhost:8080/api/v1/opinions/3
+
+{
+	"consideration": "It can be discussed."
+}
+
+Також спробуємо за неіснуючим id.
+
+
+(13) Створення Story даних
+
+POST
+http://localhost:8080/api/v1/stories
+
+{
+	"title": "Books",
+	"content": "Books are a source of knowledge."
+}
+
+Перевіремо через отримання всіх Story даних
+GET
+http://localhost:8080/api/v1/stories
+
+
+(14) Створення Opinion даних за Story id
+
+POST
+http://localhost:8080/api/v1/stories/4/opinions
+
+{
+	"consideration": "Amazing and unbelievable!"
+}
+
+{
+	"consideration": "Good thinking."
+}
+
+Перевіремо через отримання за Story id
+GET
+http://localhost:8080/api/v1/stories/4/opinions
+
+
+(15) Видалення Story даних за id.
+
+DELETE
+http://localhost:8080/api/v1/stories/3
+
+Маємо отримати Referential integrity constraint violation,
+оскільки Story за таким id має посилання на певного(их) Opinion.
+Треба спершу видалити всі Opinion, які мають відношення
+до цього Story.
+
+Знайдемо всі Opinion, які мають відношення до цього Story
+GET
+http://localhost:8080/api/v1/stories/3/opinions
+
+Видалемо (див. п. 16).
+
+Спробуємо видалити Story повторно
+DELETE
+http://localhost:8080/api/v1/stories/3
+
+Перевіремо через отримання всіх Story даних
+GET
+http://localhost:8080/api/v1/stories
+
+Спробуємо видалити Story повторно.
+
+
+(16) Видалення Opinion даних за id
+
+DELETE
+http://localhost:8080/api/v1/opinions/2
+
+Спробуємо видалити повторно.
+
+
